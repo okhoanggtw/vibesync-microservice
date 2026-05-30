@@ -56,7 +56,7 @@ services:
       - mongodb
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017/
-      ME_CONFIG_BASICAUTH: false
+      ME_CONFIG_BASICAUTH: "false"
 
 volumes:
   mongo-data:
