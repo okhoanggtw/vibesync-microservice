@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: music-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:alpine
+    container_name: music-redis
+    ports:
+      - "6379:6379"
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/auth_db
+      - JWT_SECRET=microservices_music_secret_2024
+
+  music-service:
+    build: ./music-service
+    container_name: music-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/music_db
+
+  room-service:
+    build: ./room-service
+    container_name: room-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+
+volumes:
+  mongo-data:
