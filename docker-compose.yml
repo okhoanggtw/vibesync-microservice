@@ -46,5 +46,17 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
 
+  mongo-express:
+    image: mongo-express
+    container_name: music-mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017/
+      ME_CONFIG_BASICAUTH: "false"
+
 volumes:
   mongo-data:
