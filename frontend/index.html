@@ -1030,6 +1030,15 @@
                             isPlaying: !paused,
                             updatedAt: Date.now()
                         });
+
+                        // Tự động chuyển bài khi Spotify phát hết (paused = true, position = 0)
+                        if (paused && position === 0 && state.track_window && state.track_window.previous_tracks.length > 0) {
+                            if (!window.isAutoPlayingNext) {
+                                window.isAutoPlayingNext = true;
+                                playNextInQueue();
+                                setTimeout(() => { window.isAutoPlayingNext = false; }, 2000);
+                            }
+                        }
                     }
                 });
 
