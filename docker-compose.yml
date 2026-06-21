@@ -4,6 +4,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: music-mongo
+    restart: always
     ports:
       - "27017:27017"
     volumes:
@@ -12,12 +13,14 @@ services:
   redis:
     image: redis:alpine
     container_name: music-redis
+    restart: always
     ports:
       - "6379:6379"
 
   auth-service:
     build: ./auth-service
     container_name: auth-service
+    restart: always
     ports:
       - "3001:3001"
     depends_on:
@@ -29,6 +32,7 @@ services:
   music-service:
     build: ./music-service
     container_name: music-service
+    restart: always
     ports:
       - "3002:3002"
     depends_on:
@@ -39,6 +43,7 @@ services:
   room-service:
     build: ./room-service
     container_name: room-service
+    restart: always
     ports:
       - "3003:3003"
     depends_on:
