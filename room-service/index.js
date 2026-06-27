@@ -1,23 +1,17 @@
 const express = require('express');
-const http    = require('http');
+const http = require('http');
 const { Server } = require('socket.io');
-const cors    = require('cors');
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
-
 // Lưu trạng thái từng phòng
 const rooms = {};
 // rooms[roomId] = {
-//   hostId: socket.id,         ← người đầu tiên vào = host
-//   currentSong: {...},        ← bài đang phát
-//   queue: [],                 ← hàng đợi
-//   members: { socketId: username }
-//   playback: { position: ms, isPlaying: bool, updatedAt: Date.now() }
-// }
-
+//   hostId: socket.io socket.nois rooomiD luu xong hoo.mo.conn.yo room c
+// rooms hosID socket.oi.socket.,nois rooomiD luu 
 io.on('connection', (socket) => {
     console.log(`🔌 Kết nối: ${socket.id}`);
 
@@ -27,7 +21,7 @@ io.on('connection', (socket) => {
         // Tạo phòng nếu chưa có
         if (!rooms[roomId]) {
             rooms[roomId] = {
-                hostId: socket.id,   // ← người đầu tiên = host
+                hostId: socket.id,  
                 currentSong: null,
                 queue: [],
                 members: {},
